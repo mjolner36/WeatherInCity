@@ -34,18 +34,21 @@ namespace WeatherInCity
             DateTime Sunrise = DateTimeOffset.FromUnixTimeSeconds(weatherResponse.Sys.Sunrise+zoneID).DateTime;  // конвертирование unix time to datetime прибавляем код у timezone, которая содержит разницу времени
             DateTime Sunset = DateTimeOffset.FromUnixTimeSeconds(weatherResponse.Sys.Sunset+zoneID).DateTime;
 
-
-            File.WriteAllText("weather in "+ nameCity + ".txt", "Temperature in " + weatherResponse.Name + ": " + weatherResponse.Main.Temp + " °C\n");
-            File.AppendAllText("weather in " + nameCity + ".txt", "Humidity in " + weatherResponse.Name +":"+ weatherResponse.Main.Humidity + "%\n");   
-            File.AppendAllText("weather in " + nameCity + ".txt", "Sunrise : " + Sunrise + ";  Sunset : " + Sunset );
-
-
             Console.WriteLine("Temperature in {0}: {1} °C", weatherResponse.Name, weatherResponse.Main.Temp);
             Console.WriteLine("Humidity in {0}: {1} %", weatherResponse.Name, weatherResponse.Main.Humidity);           
             Console.WriteLine("Sunrise in {0}; Sunset {1} ", Sunrise, Sunset);
 
+            DateTime thisDay = DateTime.Today;
 
-            Console.Write("Нажмите любую клавишу для выхода..."+zoneID);
+            File.WriteAllText(thisDay.ToString("d") + ".txt", "Temperature in " + weatherResponse.Name + ": " + weatherResponse.Main.Temp + " °C\n");
+            File.AppendAllText(thisDay.ToString("d") + ".txt", "Humidity in " + weatherResponse.Name +":"+ weatherResponse.Main.Humidity + "%\n");   
+            File.AppendAllText(thisDay.ToString("d") + ".txt", "Sunrise : " + Sunrise + ";  Sunset : " + Sunset );
+
+
+            
+
+
+            Console.Write("Нажмите любую клавишу для выхода...");
             Console.ReadKey();
         }
     }
